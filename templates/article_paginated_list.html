@@ -1,19 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+        <title>Список страниц</title>
+{% endblock %}
+
+{% block content%}
 {% for article in articles %}
-<p><a href="{% url 'detail' article.id %}">{{ article.header }}</a></p>
+    <p><a href="{% url 'detail' article.id %}">{{ article.header }}</a></p>
+{% empty %}
+    <p>Не существует ни одной страницы</p>
 {% endfor %}
-<p>Пагинация</p>
+
 <p>
 {% if is_paginated %}
+    Страницы:
     {% if page_obj.has_previous %}
         <a href="{% url 'page' page_obj.previous_page_number %}">
             Предыдущая&nbsp;</a>
     {% endif %}
 
-    {% for page in paginator.page_range %}
-        {% if page != page_obj.number %}
-            <a href="{% url 'page' page %}">{{ page }}</a>
+    {% for page_number in paginator.page_range %}
+        {% if page_number = page_obj.number %}
+            {{ page_number }}
         {% else %}
-            {{ page }}
+            <a href="{% url 'page' page_number %}">{{ page_number }}</a>
         {% endif %}
         &nbsp;
     {% endfor %}
@@ -25,3 +35,4 @@
 
 {% endif %}
 </p>
+{% endblock %}

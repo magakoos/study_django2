@@ -2,11 +2,7 @@
 from django.apps import AppConfig
 
 
-
 class FgsBlogConfig(AppConfig):
     name = 'fgs_blog'
-    verbose_name = 'Учебный блог'
-
-
-
+    verbose_name = u'Учебный блог'
 

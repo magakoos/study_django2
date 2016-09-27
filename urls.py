@@ -6,21 +6,26 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import generic
 
-from fgs_blog.views import ArticleList, ArticleDetail
-
 
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^$', generic.TemplateView.as_view(template_name='base.html')),
     url(r'^', include('fgs_blog.urls')),
 )
 if settings.TEMPLATE_DEBUG:
-    urlpatterns += patterns('',
-        url(r'^404.html$', generic.TemplateView.as_view(template_name='404.html')),
-        url(r'^500.html$', generic.TemplateView.as_view(template_name='500.html')),
+    urlpatterns += patterns(
+        '',
+        url(
+            r'^404.html$',
+            generic.TemplateView.as_view(template_name='404.html')
+        ),
+        url(
+            r'^500.html$',
+            generic.TemplateView.as_view(template_name='500.html')
+        ),
     )
 
 

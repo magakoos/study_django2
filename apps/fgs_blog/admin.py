@@ -1,20 +1,44 @@
 # coding=utf-8
 from django.contrib import admin
 from .models import Article, Author, Tag
-# Register your models here.
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('header', 'body', 'create_date', 'change_date')
+    fieldsets = (
+        ('Статья',{
+            'fields': ('header', 'body',)
+        }),
+        ('Теги',{
+            'fields': ('tags',)
+        }),
+        ('Meta_tag', {
+            'classes': ('collapse', ),
+            'fields': (('meta_name_description', 'meta_name_keywords'),),
+        })
+    )
+    exclude = ('create_date', 'change_date',)
+    filter_horizontal = ('tags',)
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'surname', 'email', 'phone')
+    pass
+fieldsets = (
+    ('ФИО', {
+        'fields': ('name', 'surname', 'patronymic')
+    }),
+    ('Контакты',{
+        'fields': ('email', 'phone')
+    }),
+)
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    fieldsets = (
+        (None, {
+            'fields': ('name',)
+        }),
+    )
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Author, AuthorAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag, TagAdmin)

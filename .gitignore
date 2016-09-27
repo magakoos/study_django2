@@ -1,3 +1,7 @@
-*.pyc
-*.sql
-*.dump
+**.pyc
+**.sql
+**.dump
+/.idea/
+.idea
+/_pycache__/
+__pycache__

@@ -1,5 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ article.header }}</title>
+    <meta name="author" content="{{ article.authors }}" />
+    <meta name="copyright" lang="ru" content="{{ article.authors }}" />
+    <meta name="description" content="{{ article.meta_name_description }}" />
+    <meta name="document-state" content="Dynamic" />
+    <meta name="generator" content="Django Web-Framework" />
+    <meta name="keywords" content="{{ article.meta_name_keywords }}" />
+    <meta name="resourse-type" content="document" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="content-type" content="ru" />
+    <meta http-equiv="Content-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+{% endblock %}
+
+{% block content %}
 <h1>{{ article.header }}</h1>
-<p>{{ article.authors }}</p>
+<p>{{ article.authors.surname }} {{ article.authors.name }} {{ article.authors.patronymic }} - {{ article.authors.email  }}</p>
 <p>{{ article.create_date }}</p>
 <p>
 {% for tag in article.tags.values %}
@@ -8,4 +26,5 @@
 </p>
 <p>{{ article.body }}</p>
 <p>{{ article.change_date }}</p>
+{% endblock %}
 
