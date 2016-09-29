@@ -3,41 +3,45 @@ from django.contrib import admin
 from .models import Article, Author, Tag
 
 
+class TagsInline(admin.StackedInline):
+    model = Tag.articles.through
+    exclude = ('articles',)
+
+
 class ArticleAdmin(admin.ModelAdmin):
+    readonly_fields = ('create_date', 'change_date', )
     fieldsets = (
-        ('Статья',{
+        ('Статья', {
             'fields': ('header', 'body',)
         }),
-        ('Теги',{
-            'fields': ('tags',)
+        ('Хронололия', {
+            'classes': ('collapse',),
+            'fields': ('create_date', 'change_date', )
         }),
         ('Meta_tag', {
             'classes': ('collapse', ),
             'fields': (('meta_name_description', 'meta_name_keywords'),),
         })
     )
-    exclude = ('create_date', 'change_date',)
-    filter_horizontal = ('tags',)
+    inlines = [
+        TagsInline,
+    ]
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    pass
-fieldsets = (
-    ('ФИО', {
-        'fields': ('name', 'surname', 'patronymic')
-    }),
-    ('Контакты',{
-        'fields': ('email', 'phone')
-    }),
-)
+    fieldsets = (
+        ('ФИО', {
+            'fields': ('name', 'surname', 'patronymic')
+        }),
+        ('Контакты',{
+            'fields': ('email', 'phone')
+        }),
+    )
 
 
 class TagAdmin(admin.ModelAdmin):
-    fieldsets = (
-        (None, {
-            'fields': ('name',)
-        }),
-    )
+    fields = ('name', 'articles')
+    filter_horizontal = ('articles',)
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Author, AuthorAdmin)

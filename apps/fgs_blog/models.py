@@ -32,7 +32,12 @@ class Tag(models.Model):
     """
     Тег для статьи.
     """
-    name = models.CharField(verbose_name=u"Meta Tag", max_length=128)
+    name = models.CharField(verbose_name=u"Тег", max_length=128)
+    articles = models.ManyToManyField(
+        'Article',
+        verbose_name=u"Статьи",
+        related_name='tags_reverse'
+    )
 
     class Meta:
         verbose_name = u"Тег"
@@ -50,10 +55,7 @@ class Article(models.Model):
     Статья в блоге.
     """
     authors = models.ForeignKey(Author, verbose_name=u"Авторы")
-    tags = models.ManyToManyField(
-        Tag,
-        verbose_name=u"Теги"
-    )
+    tags = models.ForeignKey('Tag', verbose_name=u"Теги")
     header = models.CharField(verbose_name=u"Заголовок", max_length=128)
     body = models.TextField(verbose_name=u"Текст", max_length=8192)
     create_date = models.DateTimeField(
